@@ -426,12 +426,12 @@
 				$parentA.removeClass( 'cat-active' );
 				$this.addClass( 'cat-active' );
 				$rows.hide();
-				// ls-custom
-				if($parent.find( '.' + $row_active ).find('.ls-post-pager').length > 0) {
+				// lc-custom
+				if($parent.find( '.' + $row_active ).find('.lc-post-pager').length > 0) {
 					$parent.find( '.' + $row_active ).fadeIn( '300' ).css( 'display', 'inline-flex' );
 					return;
 				}
-				// end ls-custom
+				// end lc-custom
 				$parent.find( '.' + $row_active ).fadeIn( '300' ).css( 'display', 'inline-block' );
 			}
 		} );

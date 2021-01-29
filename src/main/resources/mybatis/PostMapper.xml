@@ -249,8 +249,7 @@
 			</if>
 			<if test="key != null and key != ''">
 				AND (
-					fnStripTags(p.content) LIKE CONCAT('%',#{key},'%') COLLATE 'utf8mb4_unicode_ci'
-					OR p.title LIKE CONCAT('%',#{key},'%')
+					p.title LIKE CONCAT('%',#{key},'%')
 					OR p.summary LIKE CONCAT('%',#{key},'%')
 					OR p.published_at LIKE CONCAT('%',#{key},'%')
 					OR c.category_name LIKE CONCAT('%',#{key},'%')

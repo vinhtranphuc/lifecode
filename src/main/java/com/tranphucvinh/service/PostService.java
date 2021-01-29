@@ -294,7 +294,7 @@ public class PostService {
 	public List<Map<String,Object>> getTopPosts() {
 		Map<String,Object> params = new HashMap<String,Object>();
 		params.put("level", 1);
-		params.put("startList",1);
+		params.put("startList",0);
 		params.put("pageSize", 6);
 		List<Map<String,Object>> list = postMapper.selectHomePostList(params);
 		addImagesToPost(list);
@@ -303,9 +303,9 @@ public class PostService {
 	
 	public List<Map<String,Object>> getFePosts() {
 		Map<String,Object> params = new HashMap<String,Object>();
-		params.put("startList",1);
+		params.put("startList",0);
 		params.put("pageSize", 6);
-		params.put("category_id",1);
+		params.put("categoryId",1);
 		List<Map<String,Object>> list = postMapper.selectHomePostList(params);
 		addImagesToPost(list);
 		return list;
@@ -313,9 +313,9 @@ public class PostService {
 	
 	public List<Map<String,Object>> getBePosts() {
 		Map<String,Object> params = new HashMap<String,Object>();
-		params.put("startList",1);
+		params.put("startList",0);
 		params.put("pageSize", 4);
-		params.put("category_id",2);
+		params.put("categoryId",2);
 		List<Map<String,Object>> list = postMapper.selectHomePostList(params);
 		addImagesToPost(list);
 		return list;

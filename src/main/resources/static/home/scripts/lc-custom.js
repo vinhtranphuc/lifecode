@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$(document).on('click', '.ls-post-pager', function(){
+	$(document).on('click', '.lc-post-pager', function(){
         var row = $(this).parent('.penci-mega-row');
 		var categoryId = row.attr('categoryId');
 		var page = row.attr('page');
