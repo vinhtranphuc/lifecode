@@ -1,21 +1,20 @@
-<nav id="navigation" class="header-layout-top menu-style-1 header-1" role="navigation" itemscope
-			itemtype="http://schema.org/SiteNavigationElement">
+<nav id="navigation" class="header-layout-top menu-style-1 header-1" role="navigation">
 			<div class="container">
 				<div class="button-menu-mobile header-1"><i class="fa fa-bars"></i></div>
 				<ul id="menu-menu-2" class="menu">
 					<li
-						class="megamenu menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-126">
+						class="megamenu menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-126">
 						<a href="/">Home</a>
 					</li>
 					<li
 						class="menu-item menu-item-type-taxonomy menu-item-object-category penci-mega-menu menu-item-271">
-						<a>Tech</a>
+						<a href="/home/posts/tech">Tech</a>
 						<ul class="sub-menu">
 							<li class="menu-item-0">
 								<div class="penci-megamenu">
 									<div class="penci-mega-child-categories">
 										<a class="mega-cat-child cat-active all-style"
-											href="/home/posts/category"
+											href="/home/posts/tech"
 											data-id="penci-mega-1"><span>All</span></a>
 										<a class="mega-cat-child" href="/home/posts/category?categoryId=1"
 											data-id="penci-mega-2"><span>Front End</span></a>
@@ -26,11 +25,11 @@
 									</div>
 									<div class="penci-content-megamenu">
 										<div class="penci-mega-latest-posts col-mn-4 mega-row-1">
-											<div class="lc-row penci-mega-row penci-mega-1 row-active" categoryId="" pageSize="4" th:page="${postsInit.page}">
-												<div th:if="${postsInit.page != 1}" class="lc-post-pager prev">
+											<div class="lc-row penci-mega-row penci-mega-1 row-active" categoryId="tech" pageSize="4" th:page="${techPostsInit.page}">
+												<div th:if="${techPostsInit.page != 1}" class="lc-post-pager prev">
 												    <i class="fa fa-angle-left"></i>
 												</div>
-												<div th:each="post:${postsInit.list}" class="penci-mega-post">
+												<div th:each="post:${techPostsInit.list}" class="penci-mega-post">
 													<div class="penci-mega-thumbnail">
 														<span class="mega-cat-name">
 															<a th:href="${'/home/post/'+post.post_id}" th:text="${post.category_name}"></a>
@@ -48,7 +47,7 @@
 														<p class="penci-mega-date"><time class="entry-date published" th:text="${post.published_at}"></time></p>
 													</div>
 												</div>
-												<div th:if="${postsInit.isLast != true}" class="lc-post-pager next">
+												<div th:if="${techPostsInit.isLast != true}" class="lc-post-pager next">
 											    	<i class="fa fa-angle-right"></i>
 												</div>
 											</div>

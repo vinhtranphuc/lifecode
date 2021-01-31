@@ -48,9 +48,10 @@ public class HomeViewResponseAdvisor {
 	 * menu horizontal
 	 */
 	/************************/
-	@ModelAttribute("postsInit")
+	@ModelAttribute("techPostsInit")
 	public Map<String,Object> postsInit() {
 		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("isTech", true);
 		params.put("page", 1);
 		params.put("pageSize", 4);
 		return postService.getHomePostList(params);

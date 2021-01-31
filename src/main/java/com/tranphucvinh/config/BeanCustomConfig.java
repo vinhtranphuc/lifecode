@@ -1,10 +1,13 @@
 package com.tranphucvinh.config;
 
 import org.apache.tomcat.util.http.LegacyCookieProcessor;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import com.tranphucvinh.security.capcha.CaptchaGenerator;
 
@@ -30,5 +33,17 @@ public class BeanCustomConfig {
     @Bean
     public CaptchaGenerator getCaptchaGenerator() {
         return new CaptchaGenerator();
+    }
+    
+    @Bean
+    @Qualifier("customRestTemplateCustomizer")
+    public CustomRestTemplateCustomizer customRestTemplateCustomizer() {
+        return new CustomRestTemplateCustomizer();
+    }
+
+    @Bean
+    @DependsOn(value = {"customRestTemplateCustomizer"})
+    public RestTemplateBuilder restTemplateBuilder() {
+        return new RestTemplateBuilder(customRestTemplateCustomizer());
     }
 }

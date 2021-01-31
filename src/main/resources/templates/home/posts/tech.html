@@ -2,7 +2,7 @@
 	th:with="hasHeaderBottomLine = false"
 	xmlns:th="http://www.thymeleaf.org"
 	layout:decorate="~{layouts/home-layout}">
-<head th:include="~{fragments/home/head :: title('Home Life Stories')}">
+<head th:include="~{fragments/home/head :: title('Technical')}">
 <style layout:fragment="styles">
 </style>
 <th:block layout:fragment="others">
@@ -15,8 +15,7 @@
 				<div class="theiaStickySidebar">
 					<div class="archive-box">
 						<div class="title-bar">
-							<span>Category:</span>
-							<h1 th:text="${categoryName}"></h1>
+							<h1>Technical</h1>
 						</div>
 					</div>
 					<ul class="penci-wrapper-data penci-grid" id="post-list">
@@ -68,7 +67,7 @@
 							</article>
 						</li>
 					</ul>
-					<div id="loadMoreBtn" class="penci-pagination penci-ajax-more penci-ajax-home penci-ajax-more-click" th:categoryId="${categoryId}" th:page="${page}" th:pageSize="${pageSize}">
+					<div id="loadMoreBtn" class="penci-pagination penci-ajax-more penci-ajax-home penci-ajax-more-click" th:page="${page}" th:pageSize="${pageSize}">
 						<a class="penci-ajax-more-button"> <span
 							class="ajax-more-text">Load More Posts</span> <span
 							class="ajaxdot"></span><i class="fa fa-refresh"></i>
@@ -87,22 +86,18 @@ $(document).ready(function() {
 	$('#loadMoreBtn').click(function(e) {
 		var pageSize = parseInt($(this).attr('pageSize'));
 		var page = parseInt($(this).attr('page'));
-		var categoryId = $(this).attr('categoryId');
-		if(Number.isInteger(categoryId)) {
-			categoryId = parseInt($(this).attr('categoryId'));
-		}
 		$('#loadMoreBtn a').addClass('loading-posts');
 		page++;
-		$.when(loadMorePost(categoryId,pageSize,page)).then(function() {
+		$.when(loadMorePost(pageSize,page)).then(function() {
 			$('#loadMoreBtn a').removeClass('loading-posts');
 			refreshPostList($('.penci-wrapper-data .penci-owl-carousel-slider'));
 		})
 	});
 });
-function loadMorePost(categoryId,pageSize,page) {
+function loadMorePost(pageSize,page) {
 	return $.ajax({
 		type : "GET",
-		url : "/home/api/posts?categoryId="+categoryId+"&pageSize="+pageSize+"&page="+page,
+		url : "/home/api/posts?categoryId=tech&pageSize="+pageSize+"&page="+page,
 		dataType : "json",
 		success : function(data) {
 			if (data.status == 200) {

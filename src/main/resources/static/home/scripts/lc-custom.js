@@ -7,12 +7,31 @@ $(document).ready(function() {
 		var nextPage = parseInt(page)+($(this).hasClass('prev')?-1:$(this).hasClass('next')?1:0);
 		loadMenuPosts(row,categoryId,pageSize,nextPage);
     });
+
+	$(function(){
+		var lengthOrigin = window.location.origin.length
+	    var current = window.location.href.substring(lengthOrigin,window.location.href.length);
+
+		$('#navigation li').removeClass('current-menu-item current_page_item');
+	    $('#navigation li a').each(function(){
+	        var $this = $(this);
+	        // if the current path is like this link, make it active
+	        if($this.attr('href') == current){
+	            $this.parents('li').addClass('current-menu-item current_page_item');
+				$('.mega-cat-child').removeClass('cat-active');
+				if($this.hasClass('mega-cat-child')) {
+					$this.addClass('cat-active');
+				}
+				return;
+	        }
+	    })
+	 })
 });
 
 function loadMenuPosts(row,categoryId,pageSize,page) {
 	var container = $(row);
 	container.html("");
-	
+
 	// add loader
 	var tmpPostSpinner = $('#tmpPostSpinner').html();
 	tmpPostSpinner = Handlebars.compile(tmpPostSpinner+"");

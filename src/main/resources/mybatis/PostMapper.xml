@@ -9,6 +9,7 @@
 	 	p.post_id,
  		p.title,
         p.category_id,
+        p.language,
         c.category_name,
         p.content,
         p.level,
@@ -96,6 +97,7 @@
     	INSERT INTO tb_posts(
     		title,
 	        category_id,
+	        language,
 	        level,
 	        summary,
 	        has_images_ontop,
@@ -107,6 +109,7 @@
     	) VALUES (
     		#{title},
 	        #{category_id},
+            #{language},
 	        #{level},
 	        #{summary},
 	        #{hasImagesOntop},
@@ -176,6 +179,7 @@
     	SET
     		title = #{title}
 	        ,category_id = #{category_id}
+	        ,language = #{language}
 	        ,content = #{content}
 	        ,level = #{level}
 	        ,summary = #{summary}
@@ -224,7 +228,7 @@
         c.category_name,
         <!-- p.content, -->
         p.summary,
-        DATE_FORMAT(p.published_at, "%M %d, %Y") published_at,
+        CONCAT(p.language,' | ',DATE_FORMAT(p.published_at, "%M %d, %Y")) published_at,
         (SELECT username FROM tb_users WHERE user_id = p.created_user) AS created_username,
         u.user_id
 	 </sql>
@@ -232,9 +236,18 @@
 	 <sql id="sqlWhereHomePost">
 	 	<where>
 	 		p.published_at &lt;= NOW()
-			<if test="categoryId != null and categoryId != ''">
-				AND c.category_id = #{categoryId}
-			</if>
+	 		<choose>
+	 			<when test="categoryId != null and 'tech'.equals(categoryId)">
+					AND (
+						c.category_id = 1
+						OR c.category_id = 2
+						OR c.category_id = 3
+					)
+				</when>
+	 			<when test="categoryId != null and categoryId != ''">
+					AND c.category_id = #{categoryId}
+				</when>
+	 		</choose>
 			<if test="userId != null and userId != ''">
 				AND u.user_id = #{userId}
 			</if>

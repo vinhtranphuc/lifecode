@@ -50,6 +50,25 @@ public class PostsController {
         return "home/posts/category";
     }
 	
+	@RequestMapping(value = "/tech", method = RequestMethod.GET)
+    public String techCategoryPosts(@RequestParam(required = false) String categoryId, Model model, HttpServletRequest request) {
+		
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("categoryId","tech");
+		params.put("page", 1);
+		params.put("pageSize", 6);
+		Map<String,Object> postsResult = postService.getHomePostList(params);
+		if(Integer.parseInt(postsResult.get("total")+"") <1) {
+			return "/home/error/404";
+		}
+		model.addAllAttributes(postsResult);
+		
+		String postFullUrl = "http://" + request.getHeader("host")+"/home/post/";
+		model.addAttribute("postFullUrl",postFullUrl);
+		
+        return "home/posts/tech";
+    }
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
     public String userPosts(@RequestParam(required = false) String userId, Model model, HttpServletRequest request) {

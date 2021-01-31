@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -310,8 +311,15 @@ public class FileUtils {
 	}
     
 	public static List<String> getFilesInnerDir(boolean isUploadDir, String subDir) throws IOException {
-		try (Stream<Path> stream = Files
-				.walk(Paths.get(isUploadDir ? Const.FILE_UPLOAD_DIR : Const.FILE_COMMON_DIR, subDir))) {
+		Stream<Path> streamPath = null;
+		try {
+			streamPath = Files.walk(Paths.get(isUploadDir ? Const.FILE_UPLOAD_DIR : Const.FILE_COMMON_DIR, subDir));
+		} catch (NoSuchFileException ex) {
+			logger.error("Exception : {}", ExceptionUtils.getStackTrace(ex));
+			return new ArrayList<String>();
+		}
+		
+		try (Stream<Path> stream = streamPath) {
 			return stream.filter(file -> !Files.isDirectory(file)).map(Path::getFileName).map(Path::toString)
 					.collect(Collectors.toList());
 		}

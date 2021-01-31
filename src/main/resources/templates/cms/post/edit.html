@@ -129,12 +129,20 @@
                     		<div class="form-group row pr-3 pl-3">
 							    <label for="categories">Categories</label>
 							    <select class="form-control" id="categories">
-							      <option th:each="category:${categories}"
-							      	th:value="${category.category_id}"
-							      	th:selected=${category.isSelected}
-							      	th:text="${category.category_name}">
-							      </option>
+								      <option th:each="category:${categories}"
+								      	th:value="${category.category_id}"
+								      	th:selected=${category.isSelected}
+								      	th:text="${category.category_name}">
+								      </option>
 							    </select>
+						  </div>
+						  <div class="form-group row pr-3 pl-3">
+							 <label for="post-language">Language</label>
+							 <select
+								class="form-control" id="post-language">
+								<option value="EN-US" th:selected="${post.language == 'EN-US'}">EN-US</option>
+								<option value="VNI" th:selected="${post.language == 'VNI'}">VNI</option>
+							</select>
 						  </div>
 						  <div class="form-group row pr-3 pl-3">
 							    <label for="tags">Tags :&ensp;</label>
@@ -249,8 +257,10 @@ $(document).ready(function(){
 		var level = $('input[name=post-level]').length>0?$('input[name=post-level]:checked').val():2;
 		var hasImagesOntop = $('#hasImagesOntop').prop('checked') == true?1:0;
 		
+		var language = $('#post-language').val();
+		
 		validate(postTitle, categoryId, content,summary,thumbnailList)
-		&&savePost(postTitle, categoryId, content,summary,thumbnailList,tagArr,publishedAt,level,hasImagesOntop);
+		&&savePost(postTitle, categoryId,language, content,summary,thumbnailList,tagArr,publishedAt,level,hasImagesOntop);
 	});
 });
 function validate(postTitle, categoryId, content,summary,thumbnailList) {
@@ -279,7 +289,7 @@ function validate(postTitle, categoryId, content,summary,thumbnailList) {
 	}
 	return true;
 }
-function savePost(postTitle, categoryId, content,summary,thumbnailList,tagArr,publishedAt,level, hasImagesOntop) {
+function savePost(postTitle, categoryId, language, content,summary,thumbnailList,tagArr,publishedAt,level, hasImagesOntop) {
 	$("#overlay").show();
 	var postId = "[[${post.post_id}]]";
 	$.ajax({
@@ -293,6 +303,7 @@ function savePost(postTitle, categoryId, content,summary,thumbnailList,tagArr,pu
 			post_id:postId
 			,title:postTitle
 			,category_id:categoryId
+			,language:language
 			,content:content
 			,summary:summary
 			,published_at:publishedAt

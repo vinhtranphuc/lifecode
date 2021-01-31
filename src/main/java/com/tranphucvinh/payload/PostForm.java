@@ -12,6 +12,7 @@ public class PostForm {
 	public String title;
 	
 	public String category_id;
+	public String language;
 	public String content;
 	public String level;
 	public String summary;
