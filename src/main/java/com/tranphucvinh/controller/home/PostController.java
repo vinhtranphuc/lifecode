@@ -27,10 +27,13 @@ public class PostController {
 	
 	@RequestMapping(value = "/{postId}", method = RequestMethod.GET)
     public String post(@PathVariable Map<String,Object> params,Model model) {
+		
+		// get post data
 		Map<String,Object> post = postService.getPostById(params, true);
 		if(post == null || post.isEmpty()) {
 			return "/home/error/404";
 		}
+		
 		String userAvatar = post.get("post_user_avatar")+"";
 		if(userAvatar.equals("null") || StringUtils.isEmpty(userAvatar)) {
 			post.put("post_user_avatar", "/store/common/avatar-default.png");
@@ -38,7 +41,9 @@ public class PostController {
 		model.addAllAttributes(post);
 		model.addAttribute("isPost", true);
 		
-		Object likeSession = httpSession.getAttribute("likeSession");
+		// handle display like by session
+		String postSessionAttr = "LikePostId"+params.get("postId");
+		Object likeSession = httpSession.getAttribute(postSessionAttr);
 		model.addAttribute("likeSession", likeSession == null?"like":likeSession);
 		
 		List<Map<String,Object>> suggestPosts = postService.getSuggestPosts(post);

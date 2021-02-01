@@ -51,7 +51,7 @@ public class HomeViewResponseAdvisor {
 	@ModelAttribute("techPostsInit")
 	public Map<String,Object> postsInit() {
 		Map<String,Object> params = new HashMap<String,Object>();
-		params.put("isTech", true);
+		params.put("categoryId", "tech");
 		params.put("page", 1);
 		params.put("pageSize", 4);
 		return postService.getHomePostList(params);

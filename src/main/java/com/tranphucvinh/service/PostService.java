@@ -269,18 +269,19 @@ public class PostService {
 
 	public int handleLike(Map<String,Object> params, HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		String postSessionAttr = "LikePostId"+params.get("postId");
 		String status = "";
-		if(session.getAttribute("likeSession") == null) {
+		if(session.getAttribute(postSessionAttr) == null) {
 			status = "like";
 		} else {
-			status = session.getAttribute("likeSession")+"";
+			status = session.getAttribute(postSessionAttr)+"";
 		}
 		if (!StringUtils.equals("like", status)) {
 			status = "unlike";
 		}
 		params.put("status", status);
 		postMapper.updatePostLike(params);
-		session.setAttribute("likeSession", StringUtils.equals("like", status)?"unlike":"like");
+		session.setAttribute(postSessionAttr, StringUtils.equals("like", status)?"unlike":"like");
 		int likeCnt = params.get("like_cnt")==null?0:(Integer.parseInt(params.get("like_cnt")+""));
 		return likeCnt;
 	}

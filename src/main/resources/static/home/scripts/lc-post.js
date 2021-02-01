@@ -147,6 +147,7 @@ function saveComment() {
 
 function handleLike() {
 	var postId = $("#postId").val();
+	$("#post-like i").addClass("fa fa-spinner fa-spin");
 	$.ajax({
 		type: "PUT"
 		,url: "/home/api/post/handle-like"
@@ -164,13 +165,11 @@ function handleLike() {
 				var likeCnt = parseInt(data.data);
 				if(likeCnt == crrLikeCnt) 
 					return;
-				$("#post-like i").removeClass(function (index, className) {
-					return (className.match (/(^|\s)fa-heart\S+/g) || []).join(' ');
-				});
+				$("#post-like i").removeClass();
 				if(likeCnt > crrLikeCnt) {
-					$("#post-like i").addClass("fa-heart");
+					$("#post-like i").addClass("fa fa-heart");
 				} else {
-					$("#post-like i").addClass("fa-heart-o");
+					$("#post-like i").addClass("fa fa-heart-o");
 				}
 				$("#like-cnt").html(likeCnt);
 			}
