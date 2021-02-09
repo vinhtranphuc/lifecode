@@ -20,6 +20,7 @@ public class PostForm {
 	public List<String> thumbnailList;
 	public List<String> tagList;
 	public String hasImagesOntop;
+	public String imagesLayout;
 	
 	private Long user_id;
 	public Long getUser_id() {

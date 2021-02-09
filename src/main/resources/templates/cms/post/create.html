@@ -172,7 +172,14 @@ div.amsify-suggestags-area {
 									data-parsley-trigger="keyup"></textarea>
 							</div>
 							<div class="col-lg-5 col-md-5 pl-3 pr-3">
-								<label for="thumnails">Thumbnails ( <input type="checkbox" id="hasImagesOntop"></input> add images to top)</label>
+								<label for="thumnails">Thumbnails (&nbsp;<input type="checkbox" id="hasImagesOntop"/> add images to top)
+									<span id="images-layout" style="display: none;" >
+										<input type="radio" name="images_layout" checked value="1"/>&nbsp;slide&nbsp;
+										<input type="radio" name="images_layout" value="2"/>&nbsp;2 columns&nbsp;
+										<input type="radio" name="images_layout" value="3"/>&nbsp;3 columns&nbsp;
+										<input type="radio" name="images_layout" value="4"/>&nbsp;4 columns
+									</span>
+								</label>
 								<div id="thumbnail-list"></div>
 							</div>
 							<div class="col-lg-1 col-lg-1">
@@ -219,6 +226,13 @@ $(document).ready(function(){
     });
 	$('#add-image').click(function() {
 		$('#selectImage')[0].click();
+	});
+	$('#hasImagesOntop').change(function() {
+	    if(this.checked) {
+	    	$('#images-layout').show();
+	    } else {
+	    	$('#images-layout').hide();
+	    }
 	});
 	
 	$('#selectImage').change(function() {
@@ -295,6 +309,10 @@ function validate(postTitle, categoryId, content,summary,thumbnailList) {
 }
 function savePost(postTitle, categoryId, language, content,summary,thumbnailList,tagArr,publishedAt,level,hasImagesOntop) {
 	$("#overlay").show();
+	var imagesLayout = 0;
+	if(hasImagesOntop) {
+		var imagesLayout = $("input[type='radio'][name='images_layout']:checked").val();
+	}
 	$.ajax({
 		type: "POST"
 		,url: "/cms/api/post/create"
@@ -313,6 +331,7 @@ function savePost(postTitle, categoryId, language, content,summary,thumbnailList
 			,tagList:tagArr
 			,level:level+""
 			,hasImagesOntop:hasImagesOntop
+			,imagesLayout:imagesLayout
 		})
 		,dataType: "json"
 		,success: function(data) {

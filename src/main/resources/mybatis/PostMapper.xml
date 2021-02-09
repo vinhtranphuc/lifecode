@@ -15,6 +15,7 @@
         p.level,
         p.summary,
         p.has_images_ontop,
+        p.images_layout,
         p.times_of_view,
         DATE_FORMAT(p.published_at,'%Y-%m-%d') published_at,
         DATE_FORMAT(p.created_at,'%Y-%m-%d') created_at,
@@ -101,6 +102,7 @@
 	        level,
 	        summary,
 	        has_images_ontop,
+	        images_layout,
 	        times_of_view,
 	        like_cnt,
 	        published_at,
@@ -113,6 +115,7 @@
 	        #{level},
 	        #{summary},
 	        #{hasImagesOntop},
+	        #{imagesLayout},
 	        0,
 	        0,
 	        IFNULL(NULLIF(#{published_at},''), NOW()),
@@ -184,6 +187,7 @@
 	        ,level = #{level}
 	        ,summary = #{summary}
 	        ,has_images_ontop = #{hasImagesOntop}
+	        ,images_layout = #{imagesLayout}
 	        ,published_at = IFNULL(NULLIF(#{published_at},''), published_at)
 	        ,updated_at = NOW()
 	        ,updated_user = #{user_id}
@@ -308,6 +312,7 @@
 	 	SELECT
 	 		<include refid="sqlShortPost"></include>
 	 		,has_images_ontop
+	 		,images_layout
 	 		,content
 	 		,like_cnt
 	 		,u.avatar_img AS post_user_avatar

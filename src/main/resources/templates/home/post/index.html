@@ -36,13 +36,30 @@
 							</div>
 						</div>
 						<div class="post-image">
-							<div th:if="${has_images_ontop}"
-								class="penci-owl-carousel penci-owl-carousel-slider penci-nav-visible"
-								data-auto="false" data-lazy="false">
-								<figure th:each="image:${postImages}">
-									<img class="owl-lazy" th:src="${image.image_path}"></img>
-								</figure>
-							</div>
+							<th:block th:if="${has_images_ontop}">
+								<th:block th:if="${images_layout == '1'}">
+									<div class="penci-owl-carousel penci-owl-carousel-slider penci-nav-visible"
+										data-auto="false" data-lazy="false">
+										<figure th:each="image:${postImages}">
+											<img class="owl-lazy" th:src="${image.image_path}"></img>
+										</figure>
+									</div>
+								</th:block>
+								<th:block th:unless="${images_layout == '1'}">
+									<div th:class="${'penci-post-gallery-container masonry column-'+images_layout}"
+										data-height="150" data-margin="3">
+										<div class="inner-gallery-masonry-container">
+											<a th:each="image:${postImages}" class="item-gallery-masonry" th:href="${image.image_path}"
+												title="This is an image caption"
+												data-rel="penci-gallery-image-content"><div
+													class="inner-item-masonry-gallery">
+													<img th:src="${image.image_path}" alt="Gallery"/>
+												</div>
+											</a>
+										</div>
+									</div>
+								</th:block>
+							</th:block>
 						</div>
 						<div class="post-entry blockquote-style-2">
 							<div class="inner-post-entry entry-content">

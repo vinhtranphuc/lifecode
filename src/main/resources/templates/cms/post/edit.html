@@ -170,7 +170,14 @@
                                         name="summary" data-parsley-trigger="keyup"></textarea>
                          </div>
                          <div class="col-lg-5 col-md-5 pl-3 pr-3">
-                         	  <label for="thumnails">Thumbnails  ( <input type="checkbox" id="hasImagesOntop" th:checked="${post.has_images_ontop}"></input> add images to top)</label>
+                         	  <label for="thumnails">Thumbnails  ( <input type="checkbox" id="hasImagesOntop" th:checked="${post.has_images_ontop}"></input> add images to top)
+                        	  		<span id="images-layout" th:style="${post.has_images_ontop?'':'display: none;'}" >
+										<input type="radio" name="images_layout" th:checked="${post.images_layout=='1'}" value="1"/>&nbsp;slide&nbsp;
+										<input type="radio" name="images_layout" th:checked="${post.images_layout=='2'}" value="2"/>&nbsp;2 columns&nbsp;
+										<input type="radio" name="images_layout" th:checked="${post.images_layout=='3'}" value="3"/>&nbsp;3 columns&nbsp;
+										<input type="radio" name="images_layout" th:checked="${post.images_layout=='4'}" value="4"/>&nbsp;4 columns
+									</span>
+                         	  </label>
                              <div id="thumbnail-list">
                              	<div th:each="image:${post.postImages}" class="image view view-first" th:style="'background-image: url('+${image.image_path}+')'">
 						        <div class="tools tools-bottom">
@@ -217,6 +224,14 @@ $(document).ready(function(){
 	$('#add-image').click(function() {
 		$('#selectImage')[0].click();
 	});
+	$('#hasImagesOntop').change(function() {
+	    if(this.checked) {
+	    	$('#images-layout').show();
+	    } else {
+	    	$('#images-layout').hide();
+	    }
+	});
+	
 	$('#selectImage').change(function() {
 		var input = $(this);
 		addImage(input);
@@ -292,6 +307,10 @@ function validate(postTitle, categoryId, content,summary,thumbnailList) {
 function savePost(postTitle, categoryId, language, content,summary,thumbnailList,tagArr,publishedAt,level, hasImagesOntop) {
 	$("#overlay").show();
 	var postId = "[[${post.post_id}]]";
+	var imagesLayout = 0;
+	if(hasImagesOntop) {
+		var imagesLayout = $("input[type='radio'][name='images_layout']:checked").val();
+	}
 	$.ajax({
 		type: "PUT"
 		,url: "/cms/api/post/edit"
@@ -311,6 +330,7 @@ function savePost(postTitle, categoryId, language, content,summary,thumbnailList
 			,tagList:tagArr
 			,level:level+""
 			,hasImagesOntop:hasImagesOntop
+			,imagesLayout:imagesLayout
 		})
 		,dataType: "json"
 		,success: function(data) {
