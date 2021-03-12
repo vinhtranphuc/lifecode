@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
--- Host:                         149.28.146.86
--- Server version:               8.0.22 - MySQL Community Server - GPL
--- Server OS:                    Linux
+-- Host:                         127.0.0.1
+-- Server version:               10.5.4-MariaDB - mariadb.org binary distribution
+-- Server OS:                    Win64
 -- HeidiSQL Version:             11.0.0.5919
 -- --------------------------------------------------------
 
@@ -12,13 +12,13 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 
--- Dumping database structure for life_stories
-CREATE DATABASE IF NOT EXISTS `life_stories` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `life_stories`;
+-- Dumping database structure for lifecode
+CREATE DATABASE IF NOT EXISTS `lifecode` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
+USE `lifecode`;
 
--- Dumping structure for function life_stories.fnStripTags
+-- Dumping structure for function lifecode.fnStripTags
 DELIMITER //
-CREATE FUNCTION `fnStripTags`( Dirty varchar(4000) ) RETURNS varchar(4000) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci
+CREATE FUNCTION `fnStripTags`(Dirty varchar(4000) ) RETURNS varchar(4000) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci
     DETERMINISTIC
 BEGIN
   DECLARE iStart, iEnd, iLength int;
@@ -37,43 +37,43 @@ BEGIN
 END//
 DELIMITER ;
 
--- Dumping structure for table life_stories.tb_categories
+-- Dumping structure for table lifecode.tb_categories
 CREATE TABLE IF NOT EXISTS `tb_categories` (
-  `category_id` bigint NOT NULL AUTO_INCREMENT,
-  `category_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `category_img_path` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `category_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `category_img_path` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `created_user` bigint NOT NULL,
-  `updated_user` bigint DEFAULT NULL,
+  `created_user` bigint(20) NOT NULL,
+  `updated_user` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table life_stories.tb_categories: ~4 rows (approximately)
+-- Dumping data for table lifecode.tb_categories: ~4 rows (approximately)
 /*!40000 ALTER TABLE `tb_categories` DISABLE KEYS */;
 INSERT INTO `tb_categories` (`category_id`, `category_name`, `category_img_path`, `created_at`, `updated_at`, `created_user`, `updated_user`) VALUES
-	(1, 'Life', NULL, '2020-12-10 11:16:15', NULL, 1, NULL),
-	(2, 'Photography', NULL, '2020-12-10 11:16:51', NULL, 1, NULL),
+	(1, 'Front End', NULL, '2020-12-10 11:16:15', NULL, 1, NULL),
+	(2, 'Back End', NULL, '2020-12-10 11:16:51', NULL, 1, NULL),
 	(3, 'Stories', NULL, '2020-12-10 11:17:06', NULL, 1, NULL),
-	(4, 'Travel', NULL, '2020-12-10 11:17:19', NULL, 1, NULL);
+	(4, 'Life', NULL, '2020-12-10 11:17:19', NULL, 1, NULL);
 /*!40000 ALTER TABLE `tb_categories` ENABLE KEYS */;
 
--- Dumping structure for table life_stories.tb_comments
+-- Dumping structure for table lifecode.tb_comments
 CREATE TABLE IF NOT EXISTS `tb_comments` (
-  `comment_id` bigint NOT NULL AUTO_INCREMENT,
-  `post_id` bigint DEFAULT NULL,
-  `comment_parent_id` bigint DEFAULT NULL,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `comment` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `comment_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `post_id` bigint(20) DEFAULT NULL,
+  `comment_parent_id` bigint(20) DEFAULT NULL,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comment` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`comment_id`),
   KEY `FK_tbPosts_tbComment` (`post_id`),
   CONSTRAINT `FK_tbPosts_tbComment` FOREIGN KEY (`post_id`) REFERENCES `tb_posts` (`post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=214 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table life_stories.tb_comments: ~185 rows (approximately)
+-- Dumping data for table lifecode.tb_comments: ~186 rows (approximately)
 /*!40000 ALTER TABLE `tb_comments` DISABLE KEYS */;
 INSERT INTO `tb_comments` (`comment_id`, `post_id`, `comment_parent_id`, `name`, `email`, `comment`, `created_at`, `updated_at`) VALUES
 	(23, 60, 0, 'vcl', 'adsa123', 'Bài viết như cc', '2021-01-05 15:02:15', NULL),
@@ -233,8 +233,6 @@ INSERT INTO `tb_comments` (`comment_id`, `post_id`, `comment_parent_id`, `name`,
 	(177, 61, 64, 'dsasdsad', 'asdsadas', 'dsadasda', '2021-01-13 10:26:17', NULL),
 	(178, 61, 66, 'dsasdsad', 'asdsadas', 'dsadasdsa', '2021-01-13 10:26:21', NULL),
 	(179, 60, 130, 'dsasdsad', 'asdsadas', 'dsadsadsad', '2021-01-13 10:29:02', NULL),
-	(180, 80, 0, 'asdsad', '', 'ccc', '2021-01-19 09:27:22', NULL),
-	(181, 80, 0, 'dsadsad', '', 'sdasdsad', '2021-01-19 09:27:27', NULL),
 	(182, 60, 134, 'dsfdsfdsfsd', 'fsdfsfsfdsfds', 'dfsfsfsdfs', '2021-01-20 15:18:42', NULL),
 	(183, 60, 182, 'dsfdsfdsfsd', 'fsdfsfsfdsfds', 'reqewqewqewq', '2021-01-20 15:18:47', NULL),
 	(184, 60, 0, 'dsfdsfdsfsd', 'fsdfsfsfdsfds', 'dsadasdas', '2021-01-20 15:18:57', NULL),
@@ -253,21 +251,22 @@ INSERT INTO `tb_comments` (`comment_id`, `post_id`, `comment_parent_id`, `name`,
 	(197, 84, 196, 'Tran Phuc Vinh', '', 'Hhhh', '2021-01-21 23:35:59', NULL),
 	(198, 75, 0, 'sadasdasdsa', 'đáas', 'đâsd', '2021-01-23 04:44:50', NULL),
 	(199, 75, 0, 'sadasdasdsa', 'đáas', 'sadasdsad', '2021-01-23 04:44:58', NULL),
-	(200, 80, 0, 'Ffffc', '', 'Vncncncncnc', '2021-01-23 11:59:35', NULL),
-	(201, 80, 0, 'Ffffc', '', 'Vncncncncnc', '2021-01-23 11:59:36', NULL),
-	(202, 80, 0, 'Ffffc', '', 'Vncncncncnc', '2021-01-23 11:59:38', NULL),
 	(203, 84, 197, 'Tran Phuc Vinh', 'tpvinh.2212@gmail.com', 'xcvcxv', '2021-01-24 05:22:46', NULL),
 	(204, 66, 189, 'ghfghfgh', '', 'hgfghfhgg', '2021-01-24 05:32:08', NULL),
 	(205, 61, 77, 'AAAAAAAAAAAA', '', 'AAAAAAAAAAAA', '2021-01-26 03:08:10', NULL),
 	(206, 61, 72, 'fsdfsdfsd', 'fsdfsdfsd', 'fdsfdsf', '2021-01-26 07:34:53', NULL),
 	(207, 61, 66, 'fsdfsdfsd', 'fsdfsdfsd', 'dsadsadsa', '2021-01-26 07:34:58', NULL),
 	(208, 66, 0, '21323213', '123123213', 'AAAAAAAAAAAAAAA', '2021-01-27 02:15:09', NULL),
-	(209, 66, 204, '21323213', '123123213', 'dsadada', '2021-01-27 02:15:15', NULL);
+	(209, 66, 204, '21323213', '123123213', 'dsadada', '2021-01-27 02:15:15', NULL),
+	(210, 73, 0, 'sadsada', 'ádsad', 'dsadsad', '2021-03-10 10:12:48', NULL),
+	(211, 73, 0, 'sadsada', 'ádsad', 'sadsadsa', '2021-03-10 10:12:51', NULL),
+	(212, 73, 210, 'sadsada', 'ádsad', 'đasadsa', '2021-03-10 10:12:54', NULL),
+	(213, 73, 212, 'sadsada', 'ádsad', 'dsadsadsa', '2021-03-10 10:12:57', NULL);
 /*!40000 ALTER TABLE `tb_comments` ENABLE KEYS */;
 
--- Dumping structure for table life_stories.tb_contact
+-- Dumping structure for table lifecode.tb_contact
 CREATE TABLE IF NOT EXISTS `tb_contact` (
-  `contact_id` bigint NOT NULL AUTO_INCREMENT,
+  `contact_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `subject` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -277,7 +276,7 @@ CREATE TABLE IF NOT EXISTS `tb_contact` (
   PRIMARY KEY (`contact_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Dumping data for table life_stories.tb_contact: ~3 rows (approximately)
+-- Dumping data for table lifecode.tb_contact: ~3 rows (approximately)
 /*!40000 ALTER TABLE `tb_contact` DISABLE KEYS */;
 INSERT INTO `tb_contact` (`contact_id`, `name`, `email`, `subject`, `message`, `created_at`, `updated_at`) VALUES
 	(7, 'AAAAAAAAAA', 'B', 's', '123123', '2021-01-12 10:27:29', NULL),
@@ -285,155 +284,152 @@ INSERT INTO `tb_contact` (`contact_id`, `name`, `email`, `subject`, `message`, `
 	(10, 'dsadasd', 'ádsadas', 'dsadad', 'ssssss', '2021-01-22 02:01:10', NULL);
 /*!40000 ALTER TABLE `tb_contact` ENABLE KEYS */;
 
--- Dumping structure for table life_stories.tb_page_info
+-- Dumping structure for table lifecode.tb_page_info
 CREATE TABLE IF NOT EXISTS `tb_page_info` (
-  `restriction` enum('') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `about_us` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `contact_us` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `facebook_url` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `restriction` enum('') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `about_us` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contact_us` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facebook_url` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `facebook_actived` tinyint(1) DEFAULT NULL,
-  `pinterest_url` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pinterest_url` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `pinterest_actived` tinyint(1) DEFAULT NULL,
-  `youtube_url` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `youtube_url` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `youtube_actived` tinyint(1) DEFAULT NULL,
-  `instagram_url` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `instagram_url` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `instagram_actived` tinyint(1) DEFAULT NULL,
-  `twitter_url` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `twitter_url` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `twitter_actived` tinyint(1) DEFAULT NULL,
-  `flickr_url` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `flickr_url` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `flickr_actived` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`restriction`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table life_stories.tb_page_info: ~0 rows (approximately)
+-- Dumping data for table lifecode.tb_page_info: ~1 rows (approximately)
 /*!40000 ALTER TABLE `tb_page_info` DISABLE KEYS */;
 INSERT INTO `tb_page_info` (`restriction`, `about_us`, `contact_us`, `facebook_url`, `facebook_actived`, `pinterest_url`, `pinterest_actived`, `youtube_url`, `youtube_actived`, `instagram_url`, `instagram_actived`, `twitter_url`, `twitter_actived`, `flickr_url`, `flickr_actived`) VALUES
 	('', NULL, NULL, 'https://www.facebook.com/tranphucvinh2212', 1, 'https://www.pinterest.com/tranphucvinh2212', 1, 'https://www.youtube.com/user/tpvinh', 1, 'https://www.instagram.com/vinhtranphucqwe', 1, 'Twitter', 0, 'https://www.flickr.com/photos/191849641@N02', 1);
 /*!40000 ALTER TABLE `tb_page_info` ENABLE KEYS */;
 
--- Dumping structure for table life_stories.tb_posts
+-- Dumping structure for table lifecode.tb_posts
 CREATE TABLE IF NOT EXISTS `tb_posts` (
-  `post_id` bigint NOT NULL AUTO_INCREMENT,
-  `category_id` bigint DEFAULT NULL,
-  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `level` int NOT NULL,
-  `summary` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `times_of_view` int NOT NULL,
-  `like_cnt` int NOT NULL,
-  `title` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `post_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `category_id` bigint(20) DEFAULT NULL,
+  `content` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `level` int(11) NOT NULL,
+  `summary` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `language` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `images_layout` tinyint(1) DEFAULT 1,
+  `times_of_view` int(11) NOT NULL,
+  `like_cnt` int(11) NOT NULL,
+  `title` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `published_at` datetime DEFAULT NULL,
   `has_images_ontop` tinyint(1) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `created_user` bigint NOT NULL DEFAULT '0',
-  `updated_user` bigint DEFAULT '0',
+  `created_user` bigint(20) NOT NULL DEFAULT 0,
+  `updated_user` bigint(20) DEFAULT 0,
   PRIMARY KEY (`post_id`),
   KEY `FKijnwr3brs8vaosl80jg9rp7uc` (`category_id`),
   CONSTRAINT `FK_tbCategories_tbPosts` FOREIGN KEY (`category_id`) REFERENCES `tb_categories` (`category_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table life_stories.tb_posts: ~23 rows (approximately)
+-- Dumping data for table lifecode.tb_posts: ~21 rows (approximately)
 /*!40000 ALTER TABLE `tb_posts` DISABLE KEYS */;
-INSERT INTO `tb_posts` (`post_id`, `category_id`, `content`, `level`, `summary`, `times_of_view`, `like_cnt`, `title`, `published_at`, `has_images_ontop`, `created_at`, `updated_at`, `created_user`, `updated_user`) VALUES
-	(60, 1, '<p style="margin-left:0px;"><span style="color:rgb(117,117,117)!important;">TP HCM </span>Để chuẩn bị cho cuộc bầu cử Quốc gia vào tháng 5, bộ máy hành chính nhà nước của TP Thủ Đức chính thức hoạt động vào ngày 7/2.</p>\n<p style="margin-left:0px;">Quyết định điều chỉnh kế hoạch thực hiện Nghị quyết số 1111/2020 của Ủy ban Thường vụ Quốc hội về thành lập<i> TP Thủ Đức thuộc TP HCM - </i>sớm hơn gần một tháng so với <a href="https://vnexpress.net/tp-thu-duc-hoat-dong-tu-ngay-1-3-2021-4211393.html">kế hoạch</a> trước đây, vừa được Phó chủ tịch UBND thành phố Võ Văn Hoan ký.</p>\n<p style="margin-left:0px;">Trước ngày 8/1, Ban Tổ chức Thành ủy tham mưu Ban Thường vụ Thành ủy TP HCM sáp nhập bộ máy các tổ chức Đảng, chính trị - xã hội của quận 2, 9 và Thủ Đức. Từ đó, chỉ định Ban Chấp hành, Ban Thường vụ, Bí thư, Phó bí thư Thành ủy Thủ Đức và thành ủy viên.</p>\n<p style="margin-left:0px;">Muộn nhất ngày 17/1, HĐND TP Thủ Đức bầu các chức danh thuộc thẩm quyền, bao gồm: Chủ tịch và Phó chủ tịch HĐND, Trưởng ban và Phó trưởng ban của các ban thuộc HĐND, Chủ tịch, các Phó chủ tịch và ủy viên UBND TP Thủ Đức.</p>\n<figure class="image image_resized" style="width:670px;">\n <img src="https://i1-vnexpress.vnecdn.net/2021/01/02/thanh-pho-thu-duc-1446-1605090-1504-2656-1609589444.jpg?w=680&amp;h=0&amp;q=100&amp;dpr=1&amp;fit=crop&amp;s=O0SrHAmWnmrSNU2quxzTuQ" alt="TP Thủ Đức thành lập trên cơ sở sáp nhập 3 quận 2, 9 và Thủ Đức. Đồ hoạ: Thanh Huyền.">\n <figcaption>\n  đụ má\n </figcaption>\n</figure>\n<p style="margin-left:0px;text-align:center;">TP Thủ Đức thành lập trên cơ sở sáp nhập 3 quận 2, 9 và Thủ Đức. Đồ hoạ: <i>Thanh Huyền.</i></p>\n<p style="margin-left:0px;">Đối với các cơ quan ngành dọc trực thuộc Trung ương, TP HCM đề nghị các ngành Tòa án, Viện Kiểm sát, Công an, Ban Chỉ huy Quân sự, Chi cục Thi hành án dân sự, Bảo hiểm xã hội, Kho bạc, Ngân hàng Chính sách, Chi cục thuế, Chi cục Thống kê... sắp xếp tổ chức bộ máy; tài sản; biên chế, công chức, viên chức và người lao động trước ngày 25/1.</p>\n<p style="margin-left:0px;">Chính quyền TP HCM cũng đề nghị người đứng đầu các sở ngành sắp xếp, tổ chức bộ máy; tài sản; biên chế các đơn vị trực thuộc phù hợp với đơn vị hành chính mới. Đồng thời, hướng dẫn các thủ tục liên quan đến người dân và doanh nghiệp trong giai đoạn chuyển tiếp trước ngày 25/1.</p>\n<p style="margin-left:0px;">Các cơ quan, đơn vị và địa phương phải hoàn tất việc thay đổi bảng tên và biển hiệu trước ngày 1/2. Ngoài ra, trước ngày 7/2 phải thành lập Ủy ban bầu cử ở TP Thủ Đức và ở các phường nơi sắp xếp đơn vị hành chính.</p>\n<p style="margin-left:0px;">Từ ngày 7/2 đến ngày bầu cử 23/5, các cơ quan, đơn vị hoàn thiện tổ chức bộ máy và đội ngũ cán bộ sau khi sắp xếp, chuẩn bị các điều kiện để tổ chức bầu cử đại biểu Quốc hội khóa XV và đại biểu HĐND các cấp nhiệm kỳ 2021-2026.</p>\n<p style="margin-left:0px;">Tại quyết định này, UBND TP HCM cũng lập Tổ công tác xử lý những vấn đề phát sinh do Sở Nội vụ làm tổ trưởng, các thành viên là đại diện các cơ quan: Ban Tổ chức Thành ủy, các sở Tư pháp, Tài chính, Kế hoạch và Đầu tư, Tài nguyên và Môi trường, Xây dựng, Văn phòng UBND TP HCM.</p>', 1, 'sumary sumary sumary sumary sumary sumary sumary sumary Test 1', 0, 7, 'Test 1', '2020-12-30 00:00:00', 1, '2020-12-30 08:43:49', '2021-01-14 02:11:05', 7, 1),
-	(61, 1, '<p>Test xxx</p>\n<p>dsadsadsadsa</p>', 1, 'Test xxxx', 0, 1, 'Test 2', '2020-12-30 00:00:00', 0, '2020-12-30 08:48:32', '2021-01-27 04:09:00', 1, 1),
-	(63, 1, '<p>Test 4</p>\n<figure class="image">\n <img src="/store/upload/post/63/content_images/20201230084923217233352020123008492321723335.png">\n</figure>', 1, 'Test 4', 0, 1, 'Test 4', '2020-12-30 00:00:00', NULL, '2020-12-30 08:49:23', NULL, 1, 0),
-	(64, 1, '<p>Test 5</p>\n<figure class="image">\n <img src="/store/upload/post/64/content_images/20201230085126356650712020123008512635665071.png">\n <figcaption>\n  ưdasdsad\n </figcaption>\n</figure>', 1, 'Test 5', 0, 0, 'Test 5', '2020-12-30 00:00:00', 0, '2020-12-30 08:51:26', '2021-01-27 09:08:42', 1, 1),
-	(66, 2, '<p>Test 7</p>\n<figure class="image">\n <img src="/store/upload/post/66/content_images/20201230085243883172612020123008524388317261.png">\n</figure>', 1, 'Test 7', 0, 1, 'Test 7', '2021-01-21 00:00:00', 1, '2020-12-30 08:52:43', '2021-01-03 08:51:19', 1, 1),
-	(67, 2, '<p>Test 8</p>\n<figure class="image">\n <img src="/store/upload/post/67/content_images/20201230085322769997172020123008532276999717.png">\n</figure>', 1, 'Test 8', 0, 1, 'Test 8', '2020-12-30 00:00:00', NULL, '2020-12-30 08:53:22', NULL, 1, 0),
-	(68, 1, '<p>Test 9</p>', 1, 'Test 9', 0, 0, 'Test 9', '2020-12-30 00:00:00', NULL, '2020-12-30 08:54:07', NULL, 1, 0),
-	(69, 3, '<p>Test 9</p>\n<figure class="image image_resized" style="width:29.65%;">\n <img src="/store/upload/post/69/content_images/20201230091512803985682020123009151280398568.png">\n</figure>', 1, 'Test 9', 0, 0, 'Test 9', '2020-12-30 00:00:00', NULL, '2020-12-30 09:15:12', NULL, 1, 0),
-	(70, 3, '<p>Test 10</p>\n<figure class="image">\n <img src="/store/upload/post/70/content_images/20201230091543477237642020123009154347723764.png">\n</figure>', 1, 'Test 10', 0, 0, 'Test 10', '2020-12-30 00:00:00', NULL, '2020-12-30 09:15:43', NULL, 1, 0),
-	(71, 3, '<p>Test 11</p>', 2, 'Test 11', 0, 0, 'Test 11', '2020-12-30 00:00:00', NULL, '2020-12-30 09:16:37', NULL, 1, 0),
-	(72, 3, '<p>Test 12</p>', 1, 'Test 12', 0, 0, 'Test 12', '2020-12-30 00:00:00', NULL, '2020-12-30 09:17:35', NULL, 1, 0),
-	(73, 4, '<p>Test 14</p>', 1, 'Test 14', 0, 0, 'Test 14', '2020-12-30 00:00:00', NULL, '2020-12-30 09:40:15', NULL, 1, 0),
-	(74, 4, '<p>Test 15</p>\n<figure class="image image_resized" style="width:52.38%;">\n <img src="/store/upload/post/74/content_images/20201230101945337305802020123010194533730580.png">\n</figure>', 1, 'Test 15', 0, 0, 'Test 15', '2020-12-30 00:00:00', NULL, '2020-12-30 10:19:44', NULL, 1, 0),
-	(75, 4, '<p>Test 16</p>', 1, 'Test 16', 0, 1, 'Test 16', '2020-12-30 00:00:00', NULL, '2020-12-30 10:20:59', NULL, 1, 0),
-	(76, 4, '<p>Test 17</p>', 1, 'Test 17', 0, 0, 'Test 17', '2020-12-30 00:00:00', NULL, '2020-12-30 10:22:00', NULL, 1, 0),
-	(77, 4, '<p>Test 18</p>', 1, 'Test 18', 0, 0, 'Test 18', '2020-12-30 00:00:00', NULL, '2020-12-30 10:22:39', NULL, 1, 0),
-	(78, 4, '<p>Test 19</p>', 1, 'Test 19', 0, 0, 'Test 19', '2020-12-30 00:00:00', NULL, '2020-12-30 10:23:06', NULL, 1, 0),
-	(79, 4, '<p>Test 20</p>', 1, 'Test 20', 0, 0, 'Test 20', '2020-12-30 00:00:00', NULL, '2020-12-30 10:23:39', NULL, 1, 0),
-	(80, 4, '<p>Test 21</p>', 1, 'Test 21', 0, 1, 'Test 21', '2020-12-30 00:00:00', NULL, '2020-12-30 10:24:03', NULL, 1, 0),
-	(81, 4, '<p>Test 22</p>', 1, 'Test 22', 0, 0, 'Test 22', '2020-12-30 00:00:00', 0, '2020-12-30 10:24:27', '2021-01-19 08:34:57', 1, 1),
-	(82, 3, '<p>Test xxxx</p>\n<figure class="image image_resized" style="width:64.75%;">\n <img src="/store/upload/post/82/content_images/20210111103739161569612021011110373916156961.png">\n <figcaption>\n  sdasdsadsa\n </figcaption>\n</figure>', 1, 'Test xxxx', 0, 0, 'Test xxxx', '2020-12-31 00:00:00', 1, '2020-12-31 08:59:54', '2021-01-11 10:38:37', 1, 1),
-	(83, 3, '<p>dfsdfdsf</p>', 1, 'title', 0, 0, 'title', '2020-12-31 00:00:00', 1, '2020-12-31 13:44:35', '2021-01-11 10:36:46', 1, 1),
-	(84, 2, '<p style="margin-left:0px;">Lommodo ligula eget dolor. Aenean massa. Cum sociis que penatibus et magnis dis parturient montes lorem, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla onsequat massa quis enim. Donec pede justo fringilla vel aliquet nec vulputate eget. Lorem ispum dolore siamet ipsum dolor.</p>\n<p style="margin-left:0px;">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumquer nihil impedit quo minus id quod maxime placeat facere.</p>\n<figure class="image image_resized" style="width:59.48%;">\n <img src="/store/upload/post/84/content_images/20210102214609608167162021010221460960816716.png">\n</figure>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p style="margin-left:0px;"><br>&nbsp;</p>\n<blockquote>\n <p style="margin-left:0px;"><i>You will never be happy if you continue to search for what happiness consists of. You will never live if you are looking for the meaning of life.</i></p>\n <p style="margin-left:0px;"><i>ALBERT CAMUS</i></p>\n</blockquote>\n<p style="margin-left:0px;">Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus.&nbsp;Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>\n<h2 style="margin-left:0px;">LOVE WHAT YOU DO. DO WHAT YOU LOVE</h2>\n<p style="margin-left:0px;">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit.&nbsp;Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>\n<p style="margin-left:0px;">Rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer cidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>', 1, 'l;kllk;', 0, 3, 'jjkjhjhkj', '2021-01-02 00:00:00', 1, '2021-01-02 18:09:44', '2021-01-02 22:21:52', 1, 1),
-	(85, 1, '<p>SADSADSADA</p>', 1, 'ASDASDSAD', 0, 0, 'aaaaaaaaaa', '2021-01-27 00:00:00', 0, '2021-01-27 08:30:33', '2021-01-27 08:32:08', 1, 1);
+INSERT INTO `tb_posts` (`post_id`, `category_id`, `content`, `level`, `summary`, `language`, `images_layout`, `times_of_view`, `like_cnt`, `title`, `published_at`, `has_images_ontop`, `created_at`, `updated_at`, `created_user`, `updated_user`) VALUES
+	(60, 1, '<p style="margin-left:0px;"><span style="color:rgb(117,117,117)!important;">TP HCM </span>Để chuẩn bị cho cuộc bầu cử Quốc gia vào tháng 5, bộ máy hành chính nhà nước của TP Thủ Đức chính thức hoạt động vào ngày 7/2.</p>\n<p style="margin-left:0px;">Quyết định điều chỉnh kế hoạch thực hiện Nghị quyết số 1111/2020 của Ủy ban Thường vụ Quốc hội về thành lập<i> TP Thủ Đức thuộc TP HCM - </i>sớm hơn gần một tháng so với <a href="https://vnexpress.net/tp-thu-duc-hoat-dong-tu-ngay-1-3-2021-4211393.html">kế hoạch</a> trước đây, vừa được Phó chủ tịch UBND thành phố Võ Văn Hoan ký.</p>\n<p style="margin-left:0px;">Trước ngày 8/1, Ban Tổ chức Thành ủy tham mưu Ban Thường vụ Thành ủy TP HCM sáp nhập bộ máy các tổ chức Đảng, chính trị - xã hội của quận 2, 9 và Thủ Đức. Từ đó, chỉ định Ban Chấp hành, Ban Thường vụ, Bí thư, Phó bí thư Thành ủy Thủ Đức và thành ủy viên.</p>\n<p style="margin-left:0px;">Muộn nhất ngày 17/1, HĐND TP Thủ Đức bầu các chức danh thuộc thẩm quyền, bao gồm: Chủ tịch và Phó chủ tịch HĐND, Trưởng ban và Phó trưởng ban của các ban thuộc HĐND, Chủ tịch, các Phó chủ tịch và ủy viên UBND TP Thủ Đức.</p>\n<figure class="image image_resized" style="width:670px;">\n <img src="https://i1-vnexpress.vnecdn.net/2021/01/02/thanh-pho-thu-duc-1446-1605090-1504-2656-1609589444.jpg?w=680&amp;h=0&amp;q=100&amp;dpr=1&amp;fit=crop&amp;s=O0SrHAmWnmrSNU2quxzTuQ" alt="TP Thủ Đức thành lập trên cơ sở sáp nhập 3 quận 2, 9 và Thủ Đức. Đồ hoạ: Thanh Huyền.">\n <figcaption>\n  đụ má\n </figcaption>\n</figure>\n<p style="margin-left:0px;text-align:center;">TP Thủ Đức thành lập trên cơ sở sáp nhập 3 quận 2, 9 và Thủ Đức. Đồ hoạ: <i>Thanh Huyền.</i></p>\n<p style="margin-left:0px;">Đối với các cơ quan ngành dọc trực thuộc Trung ương, TP HCM đề nghị các ngành Tòa án, Viện Kiểm sát, Công an, Ban Chỉ huy Quân sự, Chi cục Thi hành án dân sự, Bảo hiểm xã hội, Kho bạc, Ngân hàng Chính sách, Chi cục thuế, Chi cục Thống kê... sắp xếp tổ chức bộ máy; tài sản; biên chế, công chức, viên chức và người lao động trước ngày 25/1.</p>\n<p style="margin-left:0px;">Chính quyền TP HCM cũng đề nghị người đứng đầu các sở ngành sắp xếp, tổ chức bộ máy; tài sản; biên chế các đơn vị trực thuộc phù hợp với đơn vị hành chính mới. Đồng thời, hướng dẫn các thủ tục liên quan đến người dân và doanh nghiệp trong giai đoạn chuyển tiếp trước ngày 25/1.</p>\n<p style="margin-left:0px;">Các cơ quan, đơn vị và địa phương phải hoàn tất việc thay đổi bảng tên và biển hiệu trước ngày 1/2. Ngoài ra, trước ngày 7/2 phải thành lập Ủy ban bầu cử ở TP Thủ Đức và ở các phường nơi sắp xếp đơn vị hành chính.</p>\n<p style="margin-left:0px;">Từ ngày 7/2 đến ngày bầu cử 23/5, các cơ quan, đơn vị hoàn thiện tổ chức bộ máy và đội ngũ cán bộ sau khi sắp xếp, chuẩn bị các điều kiện để tổ chức bầu cử đại biểu Quốc hội khóa XV và đại biểu HĐND các cấp nhiệm kỳ 2021-2026.</p>\n<p style="margin-left:0px;">Tại quyết định này, UBND TP HCM cũng lập Tổ công tác xử lý những vấn đề phát sinh do Sở Nội vụ làm tổ trưởng, các thành viên là đại diện các cơ quan: Ban Tổ chức Thành ủy, các sở Tư pháp, Tài chính, Kế hoạch và Đầu tư, Tài nguyên và Môi trường, Xây dựng, Văn phòng UBND TP HCM.</p>', 1, 'sumary sumary sumary sumary sumary sumary sumary sumary Test 1', 'VNI', 1, 0, 7, 'Test 1', '2020-12-30 00:00:00', 1, '2020-12-30 08:43:49', '2021-01-14 02:11:05', 7, 1),
+	(61, 4, '<p>Test xxx</p>\n<p>dsadsadsadsa</p>\n<figure class="image image_resized" style="width:82.53%;">\n <img src="/store/upload/post/61/content_images/20210310152310749235302021031015231074923530.png">\n</figure>', 2, 'Test xxxx', 'VNI', 0, 0, 2, 'Test 2', '2020-12-30 00:00:00', 0, '2020-12-30 08:48:32', '2021-03-10 15:27:15', 1, 1),
+	(63, 1, '<p>Test 4</p>\n<figure class="image">\n <img src="/store/upload/post/63/content_images/20201230084923217233352020123008492321723335.png">\n</figure>', 1, 'Test 4', 'VNI', 1, 0, 1, 'Test 4', '2020-12-30 00:00:00', NULL, '2020-12-30 08:49:23', NULL, 1, 0),
+	(64, 1, '<p>Test 5</p>\n<figure class="image">\n <img src="/store/upload/post/64/content_images/20201230085126356650712020123008512635665071.png">\n <figcaption>\n  ưdasdsad\n </figcaption>\n</figure>', 1, 'Test 5', 'VNI', 1, 0, 0, 'Test 5', '2020-12-30 00:00:00', 0, '2020-12-30 08:51:26', '2021-01-27 09:08:42', 1, 1),
+	(66, 2, '<p>Test 7</p>\n<figure class="image">\n <img src="/store/upload/post/66/content_images/20201230085243883172612020123008524388317261.png">\n</figure>', 1, 'Test 7', 'VNI', 1, 0, 1, 'Test 7', '2021-01-21 00:00:00', 1, '2020-12-30 08:52:43', '2021-01-03 08:51:19', 1, 1),
+	(67, 2, '<p>Test 8</p>\n<figure class="image">\n <img src="/store/upload/post/67/content_images/20201230085322769997172020123008532276999717.png">\n</figure>', 1, 'Test 8', 'VNI', 1, 0, 1, 'Test 8', '2020-12-30 00:00:00', NULL, '2020-12-30 08:53:22', NULL, 1, 0),
+	(68, 1, '<p>Test 9</p>', 1, 'Test 9', 'VNI', 1, 0, 0, 'Test 9', '2020-12-30 00:00:00', NULL, '2020-12-30 08:54:07', NULL, 1, 0),
+	(69, 3, '<p>Test 9</p>\n<figure class="image image_resized" style="width:29.65%;">\n <img src="/store/upload/post/69/content_images/20201230091512803985682020123009151280398568.png">\n</figure>', 1, 'Test 9', 'VNI', 1, 0, 0, 'Test 9', '2020-12-30 00:00:00', NULL, '2020-12-30 09:15:12', NULL, 1, 0),
+	(70, 3, '<p>Test 10</p>\n<figure class="image">\n <img src="/store/upload/post/70/content_images/20201230091543477237642020123009154347723764.png">\n</figure>', 1, 'Test 10', 'VNI', 1, 0, 0, 'Test 10', '2020-12-30 00:00:00', NULL, '2020-12-30 09:15:43', NULL, 1, 0),
+	(71, 3, '<p>Test 11</p>', 2, 'Test 11', 'VNI', 1, 0, 0, 'Test 11', '2020-12-30 00:00:00', NULL, '2020-12-30 09:16:37', NULL, 1, 0),
+	(72, 3, '<p>Test 12</p>', 1, 'Test 12', 'VNI', 1, 0, 0, 'Test 12', '2020-12-30 00:00:00', NULL, '2020-12-30 09:17:35', NULL, 1, 0),
+	(73, 4, '<p>Test 14</p>', 1, 'Test 14', 'VNI', 1, 0, 0, 'Test 14', '2020-12-30 00:00:00', NULL, '2020-12-30 09:40:15', NULL, 1, 0),
+	(74, 4, '<p>Test 15</p>\n<figure class="image image_resized" style="width:52.38%;">\n <img src="/store/upload/post/74/content_images/20201230101945337305802020123010194533730580.png">\n</figure>', 1, 'Test 15', 'VNI', 1, 0, 0, 'Test 15', '2020-12-30 00:00:00', NULL, '2020-12-30 10:19:44', NULL, 1, 0),
+	(75, 4, '<p>Test 16</p>', 1, 'Test 16', 'VNI', 1, 0, 1, 'Test 16', '2020-12-30 00:00:00', NULL, '2020-12-30 10:20:59', NULL, 1, 0),
+	(76, 4, '<p>Test 17</p>', 1, 'Test 17', 'VNI', 1, 0, 0, 'Test 17', '2020-12-30 00:00:00', NULL, '2020-12-30 10:22:00', NULL, 1, 0),
+	(77, 4, '<p>Test 18</p>', 1, 'Test 18', 'VNI', 1, 0, 0, 'Test 18', '2020-12-30 00:00:00', NULL, '2020-12-30 10:22:39', NULL, 1, 0),
+	(78, 4, '<p>Test 19</p>', 1, 'Test 19', 'VNI', 1, 0, 0, 'Test 19', '2020-12-30 00:00:00', NULL, '2020-12-30 10:23:06', NULL, 1, 0),
+	(82, 3, '<p>Test xxxx</p>\n<figure class="image image_resized" style="width:64.75%;">\n <img src="/store/upload/post/82/content_images/20210111103739161569612021011110373916156961.png">\n <figcaption>\n  sdasdsadsa\n </figcaption>\n</figure>', 1, 'Test xxxx', 'VNI', 1, 0, 0, 'Test xxxx', '2020-12-31 00:00:00', 1, '2020-12-31 08:59:54', '2021-01-11 10:38:37', 1, 1),
+	(83, 3, '<p>dfsdfdsf</p>', 1, 'title', 'VNI', 1, 0, 0, 'title', '2020-12-31 00:00:00', 1, '2020-12-31 13:44:35', '2021-01-11 10:36:46', 1, 1),
+	(84, 2, '<p style="margin-left:0px;">Lommodo ligula eget dolor. Aenean massa. Cum sociis que penatibus et magnis dis parturient montes lorem, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla onsequat massa quis enim. Donec pede justo fringilla vel aliquet nec vulputate eget. Lorem ispum dolore siamet ipsum dolor.</p>\n<p style="margin-left:0px;">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumquer nihil impedit quo minus id quod maxime placeat facere.</p>\n<figure class="image image_resized" style="width:59.48%;">\n <img src="/store/upload/post/84/content_images/20210102214609608167162021010221460960816716.png">\n</figure>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p style="margin-left:0px;"><br>&nbsp;</p>\n<blockquote>\n <p style="margin-left:0px;"><i>You will never be happy if you continue to search for what happiness consists of. You will never live if you are looking for the meaning of life.</i></p>\n <p style="margin-left:0px;"><i>ALBERT CAMUS</i></p>\n</blockquote>\n<p style="margin-left:0px;">Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus.&nbsp;Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>\n<h2 style="margin-left:0px;">LOVE WHAT YOU DO. DO WHAT YOU LOVE</h2>\n<p style="margin-left:0px;">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit.&nbsp;Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>\n<p style="margin-left:0px;">Rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer cidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p>', 1, 'l;kllk;', 'VNI', 1, 0, 3, 'jjkjhjhkj', '2021-01-02 00:00:00', 1, '2021-01-02 18:09:44', '2021-01-02 22:21:52', 1, 1),
+	(85, 1, '<p>SADSADSADA</p>', 1, 'AAAAAAAAAAAAAA', 'VNI', 1, 0, 0, 'aaaaaaaaaa', '2021-01-27 00:00:00', 0, '2021-01-27 08:30:33', '2021-01-27 08:32:08', 1, 1);
 /*!40000 ALTER TABLE `tb_posts` ENABLE KEYS */;
 
--- Dumping structure for table life_stories.tb_posts_authors
+-- Dumping structure for table lifecode.tb_posts_authors
 CREATE TABLE IF NOT EXISTS `tb_posts_authors` (
-  `post_id` bigint NOT NULL,
-  `user_id` bigint NOT NULL,
+  `post_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
   PRIMARY KEY (`post_id`,`user_id`),
   KEY `FKet0txk8jynytashy09ehfbpp3` (`user_id`),
   CONSTRAINT `FK_tbPosts_tbPostsAurhors` FOREIGN KEY (`post_id`) REFERENCES `tb_posts` (`post_id`),
   CONSTRAINT `FK_tbUsers_tbPostsAurhors` FOREIGN KEY (`user_id`) REFERENCES `tb_users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table life_stories.tb_posts_authors: ~0 rows (approximately)
+-- Dumping data for table lifecode.tb_posts_authors: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_posts_authors` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tb_posts_authors` ENABLE KEYS */;
 
--- Dumping structure for table life_stories.tb_posts_tags
+-- Dumping structure for table lifecode.tb_posts_tags
 CREATE TABLE IF NOT EXISTS `tb_posts_tags` (
-  `post_id` bigint NOT NULL,
-  `tag_id` bigint NOT NULL,
+  `post_id` bigint(20) NOT NULL,
+  `tag_id` bigint(20) NOT NULL,
   PRIMARY KEY (`post_id`,`tag_id`),
   KEY `FK4svsmj4juqu2l8yaw6whr1v4v` (`tag_id`),
   CONSTRAINT `FK_tbPosts_tbPostsTags` FOREIGN KEY (`post_id`) REFERENCES `tb_posts` (`post_id`),
   CONSTRAINT `FK_tbTags_tbPostsTags` FOREIGN KEY (`tag_id`) REFERENCES `tb_tags` (`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table life_stories.tb_posts_tags: ~22 rows (approximately)
+-- Dumping data for table lifecode.tb_posts_tags: ~25 rows (approximately)
 /*!40000 ALTER TABLE `tb_posts_tags` DISABLE KEYS */;
 INSERT INTO `tb_posts_tags` (`post_id`, `tag_id`) VALUES
 	(60, 367),
 	(64, 373),
 	(66, 374),
+	(66, 383),
+	(66, 389),
+	(66, 456),
+	(66, 457),
 	(67, 375),
 	(68, 376),
 	(69, 376),
+	(69, 389),
 	(72, 378),
 	(73, 379),
-	(84, 380),
-	(66, 383),
-	(82, 383),
-	(85, 386),
-	(84, 387),
-	(66, 389),
-	(69, 389),
 	(74, 389),
 	(75, 389),
 	(81, 389),
+	(82, 383),
 	(82, 389),
 	(83, 389),
+	(84, 380),
+	(84, 387),
 	(84, 389),
-	(66, 456),
-	(66, 457),
+	(85, 386),
 	(85, 471),
 	(85, 474);
 /*!40000 ALTER TABLE `tb_posts_tags` ENABLE KEYS */;
 
--- Dumping structure for table life_stories.tb_post_images
+-- Dumping structure for table lifecode.tb_post_images
 CREATE TABLE IF NOT EXISTS `tb_post_images` (
-  `image_id` bigint NOT NULL AUTO_INCREMENT,
-  `post_id` bigint DEFAULT NULL,
+  `image_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `post_id` bigint(20) DEFAULT NULL,
   `image_path` varchar(1000) DEFAULT NULL,
   `standard_image_path` varchar(1000) DEFAULT NULL,
   `small_image_path` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`image_id`),
   KEY `FK_tbPosts_tbPostImages` (`post_id`),
   CONSTRAINT `FK_tbPosts_tbPostImages` FOREIGN KEY (`post_id`) REFERENCES `tb_posts` (`post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=latin1;
 
--- Dumping data for table life_stories.tb_post_images: ~32 rows (approximately)
+-- Dumping data for table lifecode.tb_post_images: ~32 rows (approximately)
 /*!40000 ALTER TABLE `tb_post_images` DISABLE KEYS */;
 INSERT INTO `tb_post_images` (`image_id`, `post_id`, `image_path`, `standard_image_path`, `small_image_path`) VALUES
 	(81, 60, '/store/upload/post/60/thumbnail/20201230084434336244752020123008443433624475.png', '/store/upload/post/60/thumbnail/585x390-20201230084434336244752020123008443433624475.png', '/store/upload/post/60/thumbnail/263x175-20201230084434336244752020123008443433624475.png'),
 	(83, 60, '/store/upload/post/60/thumbnail/20201230084621443344652020123008462144334465.png', '/store/upload/post/60/thumbnail/585x390-20201230084621443344652020123008462144334465.png', '/store/upload/post/60/thumbnail/263x175-20201230084621443344652020123008462144334465.png'),
-	(84, 61, '/store/upload/post/61/thumbnail/20201230084832275691652020123008483227569165.png', '/store/upload/post/61/thumbnail/585x390-20201230084832275691652020123008483227569165.png', '/store/upload/post/61/thumbnail/263x175-20201230084832275691652020123008483227569165.png'),
-	(85, 61, '/store/upload/post/61/thumbnail/20201230084836606523682020123008483660652368.png', '/store/upload/post/61/thumbnail/585x390-20201230084836606523682020123008483660652368.png', '/store/upload/post/61/thumbnail/263x175-20201230084836606523682020123008483660652368.png'),
 	(87, 63, '/store/upload/post/63/thumbnail/20201230084923379955902020123008492337995590.png', '/store/upload/post/63/thumbnail/585x390-20201230084923379955902020123008492337995590.png', '/store/upload/post/63/thumbnail/263x175-20201230084923379955902020123008492337995590.png'),
 	(88, 64, '/store/upload/post/64/thumbnail/20201230085126564179422020123008512656417942.png', '/store/upload/post/64/thumbnail/585x390-20201230085126564179422020123008512656417942.png', '/store/upload/post/64/thumbnail/263x175-20201230085126564179422020123008512656417942.png'),
 	(90, 66, '/store/upload/post/66/thumbnail/20201230085244059503032020123008524405950303.png', '/store/upload/post/66/thumbnail/585x390-20201230085244059503032020123008524405950303.png', '/store/upload/post/66/thumbnail/263x175-20201230085244059503032020123008524405950303.png'),
@@ -452,7 +448,6 @@ INSERT INTO `tb_post_images` (`image_id`, `post_id`, `image_path`, `standard_ima
 	(103, 77, '/store/upload/post/77/thumbnail/20201230102239647946572020123010223964794657.png', '/store/upload/post/77/thumbnail/585x390-20201230102239647946572020123010223964794657.png', '/store/upload/post/77/thumbnail/263x175-20201230102239647946572020123010223964794657.png'),
 	(104, 78, '/store/upload/post/78/thumbnail/20201230102306383749772020123010230638374977.png', '/store/upload/post/78/thumbnail/585x390-20201230102306383749772020123010230638374977.png', '/store/upload/post/78/thumbnail/263x175-20201230102306383749772020123010230638374977.png'),
 	(105, 79, '/store/upload/post/79/thumbnail/20201230102339011836652020123010233901183665.png', '/store/upload/post/79/thumbnail/585x390-20201230102339011836652020123010233901183665.png', '/store/upload/post/79/thumbnail/263x175-20201230102339011836652020123010233901183665.png'),
-	(106, 80, '/store/upload/post/80/thumbnail/20201230102403596369222020123010240359636922.png', '/store/upload/post/80/thumbnail/585x390-20201230102403596369222020123010240359636922.png', '/store/upload/post/80/thumbnail/263x175-20201230102403596369222020123010240359636922.png'),
 	(107, 81, '/store/upload/post/81/thumbnail/20201230102427182421252020123010242718242125.png', '/store/upload/post/81/thumbnail/585x390-20201230102427182421252020123010242718242125.png', '/store/upload/post/81/thumbnail/263x175-20201230102427182421252020123010242718242125.png'),
 	(108, 82, '/store/upload/post/82/thumbnail/20201231085954941988142020123108595494198814.png', '/store/upload/post/82/thumbnail/585x390-20201231085954941988142020123108595494198814.png', '/store/upload/post/82/thumbnail/263x175-20201231085954941988142020123108595494198814.png'),
 	(109, 83, '/store/upload/post/83/thumbnail/20201231134435603285182020123113443560328518.png', '/store/upload/post/83/thumbnail/585x390-20201231134435603285182020123113443560328518.png', '/store/upload/post/83/thumbnail/263x175-20201231134435603285182020123113443560328518.png'),
@@ -462,18 +457,20 @@ INSERT INTO `tb_post_images` (`image_id`, `post_id`, `image_path`, `standard_ima
 	(115, 84, '/store/upload/post/84/thumbnail/20210102215130769267972021010221513076926797.png', '/store/upload/post/84/thumbnail/585x390-20210102215130769267972021010221513076926797.png', '/store/upload/post/84/thumbnail/263x175-20210102215130769267972021010221513076926797.png'),
 	(116, 82, '/store/upload/post/82/thumbnail/20210111103837693221482021011110383769322148.png', '/store/upload/post/82/thumbnail/585x390-20210111103837693221482021011110383769322148.png', '/store/upload/post/82/thumbnail/263x175-20210111103837693221482021011110383769322148.png'),
 	(117, 81, '/store/upload/post/81/thumbnail/20210119153458065653692021011915345806565369.png', '/store/upload/post/81/thumbnail/585x390-20210119153458065653692021011915345806565369.png', '/store/upload/post/81/thumbnail/263x175-20210119153458065653692021011915345806565369.png'),
-	(118, 85, '/store/upload/post/85/thumbnail/20210127153034909959232021012715303490995923.png', '/store/upload/post/85/thumbnail/585x390-20210127153034909959232021012715303490995923.png', '/store/upload/post/85/thumbnail/263x175-20210127153034909959232021012715303490995923.png');
+	(118, 85, '/store/upload/post/85/thumbnail/20210127153034909959232021012715303490995923.png', '/store/upload/post/85/thumbnail/585x390-20210127153034909959232021012715303490995923.png', '/store/upload/post/85/thumbnail/263x175-20210127153034909959232021012715303490995923.png'),
+	(119, 61, '/store/upload/post/61/thumbnail/20210310152311147872182021031015231114787218.png', '/store/upload/post/61/thumbnail/585x390-20210310152311147872182021031015231114787218.png', '/store/upload/post/61/thumbnail/263x175-20210310152311147872182021031015231114787218.png'),
+	(120, 61, '/store/upload/post/61/thumbnail/20210310152317619319772021031015231761931977.png', '/store/upload/post/61/thumbnail/585x390-20210310152317619319772021031015231761931977.png', '/store/upload/post/61/thumbnail/263x175-20210310152317619319772021031015231761931977.png');
 /*!40000 ALTER TABLE `tb_post_images` ENABLE KEYS */;
 
--- Dumping structure for table life_stories.tb_roles
+-- Dumping structure for table lifecode.tb_roles
 CREATE TABLE IF NOT EXISTS `tb_roles` (
-  `role_id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `role_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`role_id`),
   UNIQUE KEY `UK_3mgeodec2ykm307478v8u0352` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table life_stories.tb_roles: ~3 rows (approximately)
+-- Dumping data for table lifecode.tb_roles: ~3 rows (approximately)
 /*!40000 ALTER TABLE `tb_roles` DISABLE KEYS */;
 INSERT INTO `tb_roles` (`role_id`, `name`) VALUES
 	(2, 'ROLE_ADMIN'),
@@ -481,15 +478,15 @@ INSERT INTO `tb_roles` (`role_id`, `name`) VALUES
 	(3, 'ROLE_USER');
 /*!40000 ALTER TABLE `tb_roles` ENABLE KEYS */;
 
--- Dumping structure for table life_stories.tb_tags
+-- Dumping structure for table lifecode.tb_tags
 CREATE TABLE IF NOT EXISTS `tb_tags` (
-  `tag_id` bigint NOT NULL AUTO_INCREMENT,
-  `tag` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tag_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `tag` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`tag_id`),
   UNIQUE KEY `tag` (`tag`)
 ) ENGINE=InnoDB AUTO_INCREMENT=476 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table life_stories.tb_tags: ~19 rows (approximately)
+-- Dumping data for table lifecode.tb_tags: ~16 rows (approximately)
 /*!40000 ALTER TABLE `tb_tags` DISABLE KEYS */;
 INSERT INTO `tb_tags` (`tag_id`, `tag`) VALUES
 	(386, 'AAA'),
@@ -510,52 +507,52 @@ INSERT INTO `tb_tags` (`tag_id`, `tag`) VALUES
 	(387, 'xxx');
 /*!40000 ALTER TABLE `tb_tags` ENABLE KEYS */;
 
--- Dumping structure for table life_stories.tb_users
+-- Dumping structure for table lifecode.tb_users
 CREATE TABLE IF NOT EXISTS `tb_users` (
-  `user_id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `address` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `avatar_img` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `city` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `company_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `country` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar_img` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `company_name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `enabled` bit(1) NOT NULL,
-  `full_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `full_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `join_date` datetime DEFAULT NULL,
-  `note` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `occupation` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `provider` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `provider_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `social_avatar_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `summary` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `type` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `username` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` varchar(500) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `occupation` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `provider_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `social_avatar_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `summary` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `UK8n82lwp7lflhwda2v2v3wckc9` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table life_stories.tb_users: ~2 rows (approximately)
+-- Dumping data for table lifecode.tb_users: ~2 rows (approximately)
 /*!40000 ALTER TABLE `tb_users` DISABLE KEYS */;
 INSERT INTO `tb_users` (`user_id`, `created_at`, `updated_at`, `address`, `avatar_img`, `city`, `company_name`, `country`, `email`, `enabled`, `full_name`, `join_date`, `note`, `occupation`, `password`, `phone`, `provider`, `provider_id`, `social_avatar_url`, `summary`, `type`, `username`) VALUES
-	(1, '2020-12-04 15:14:06', '2020-12-04 15:14:07', 'Duy Xuyên, Quảng Nam', '/store/upload/user/tranphucvinh/avatar/2021012412354008327150_87177420_2593437000891830_1889369513808363520_n.jpg', NULL, 'Softone', 'Viet Nam', 'vinhtranphuc@gmail.com', b'1', 'Trần Phúc Vinh', '2020-12-04 15:14:45', NULL, NULL, '$2a$10$A7F8CntAh5lojQCnWil6wOEIF4SRDxVcamp.aMB5uR.a0icZ/BtYa', '0382607172', 'local', NULL, NULL, 'FFFFFFSadasdas\ndsadasdsadas', NULL, 'tranphucvinh'),
+	(1, '2020-12-04 15:14:06', '2020-12-04 15:14:07', 'Duy Xuyên, Quảng Nam', '/store/upload/user/tranphucvinh/avatar/2021031015311694263519_abc.jfif', NULL, 'Softone', 'Viet Nam', 'vinhtranphuc@gmail.com', b'1', 'Trần Phúc Vinh', '2020-12-04 15:14:45', NULL, NULL, '$2a$10$A7F8CntAh5lojQCnWil6wOEIF4SRDxVcamp.aMB5uR.a0icZ/BtYa', '0382607172', 'local', NULL, NULL, 'FFFFFFSadasdas\ndsadasdsadas', NULL, 'tranphucvinh'),
 	(4, '2020-12-21 09:46:47', '2020-12-21 09:46:47', NULL, NULL, NULL, NULL, NULL, NULL, b'1', 'testadmin', '2020-12-21 09:46:47', NULL, NULL, '$2a$10$Fr0bEf46RU676YJ9BkuyvO3c.Qc92YL2sKsJN47hJHzxC4BlwfdwC', NULL, 'local', NULL, NULL, NULL, NULL, 'testadmin');
 /*!40000 ALTER TABLE `tb_users` ENABLE KEYS */;
 
--- Dumping structure for table life_stories.tb_user_roles
+-- Dumping structure for table lifecode.tb_user_roles
 CREATE TABLE IF NOT EXISTS `tb_user_roles` (
-  `user_id` bigint NOT NULL,
-  `role_id` bigint NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `role_id` bigint(20) NOT NULL,
   PRIMARY KEY (`user_id`,`role_id`),
   KEY `FK3mxrxqo67aefq0yaufnn84v3e` (`role_id`),
   CONSTRAINT `FK3mxrxqo67aefq0yaufnn84v3e` FOREIGN KEY (`role_id`) REFERENCES `tb_roles` (`role_id`),
   CONSTRAINT `FKugolgxur3og4u4y8od79ubp6` FOREIGN KEY (`user_id`) REFERENCES `tb_users` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table life_stories.tb_user_roles: ~3 rows (approximately)
+-- Dumping data for table lifecode.tb_user_roles: ~2 rows (approximately)
 /*!40000 ALTER TABLE `tb_user_roles` DISABLE KEYS */;
 INSERT INTO `tb_user_roles` (`user_id`, `role_id`) VALUES
 	(1, 1),

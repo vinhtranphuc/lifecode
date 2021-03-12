@@ -48,7 +48,7 @@ public class PostController {
 		
 		List<Map<String,Object>> suggestPosts = postService.getSuggestPosts(post);
 		model.addAttribute("suggestPosts",suggestPosts);
-		
+
         return "home/post/index";
     }
 }
